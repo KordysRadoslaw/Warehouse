@@ -34,19 +34,49 @@ public class WebSecurityConfig{
 
 	    @Autowired
 	    UserDetailsServiceImpl userDetailsService;
+	    
+	    private static final String[] AUTH_WHITELIST = {
+	            // -- Swagger UI v2
+	            "/v2/api-docs",
+	            "/swagger-resources",
+	            "/swagger-resources/**",
+	            "/configuration/ui",
+	            "/configuration/security",
+	            "/swagger-ui.html",
+	            "/webjars/**",
+	            // -- Swagger UI v3 (OpenAPI)
+	            "/v3/api-docs/**",
+	            "/swagger-ui/**"
+	            
+	    };
 
 	    @Bean
 	    public SecurityFilterChain filterChain(HttpSecurity http) 
 	                   throws Exception {
 
-//	        http.cors().and().csrf().disable().exceptionHandling()
+////	        http.cors().and().csrf().disable().exceptionHandling()
+////	           .authenticationEntryPoint(unauthorizedHandler).and()
+////	                .sessionManagement().sessionCreationPolicy
+////	                    (SessionCreationPolicy.STATELESS).and()
+////	                         .authorizeRequests()
+////	                              .antMatchers("/api/auth/**")
+////	                                 .permitAll()
+////	                                      .antMatchers("/api/test/**", "/api/**")
+////	                        .permitAll().anyRequest().authenticated();
+////
+////	        http.addFilterBefore(authenticationJwtTokenFilter(), 
+////	                   UsernamePasswordAuthenticationFilter.class);
+////
+////	        return http.build();
+//	    	
+//	    	 http.cors().and().csrf().disable().exceptionHandling()
 //	           .authenticationEntryPoint(unauthorizedHandler).and()
 //	                .sessionManagement().sessionCreationPolicy
 //	                    (SessionCreationPolicy.STATELESS).and()
 //	                         .authorizeRequests()
 //	                              .antMatchers("/api/auth/**")
 //	                                 .permitAll()
-//	                                      .antMatchers("/api/test/**", "/api/**")
+//	                                      .antMatchers("/api/test/**", "/api/**", "/api/addtocart/**", "api/checkoutControl/**")
 //	                        .permitAll().anyRequest().authenticated();
 //
 //	        http.addFilterBefore(authenticationJwtTokenFilter(), 
@@ -54,7 +84,8 @@ public class WebSecurityConfig{
 //
 //	        return http.build();
 	    	
-	    	 http.cors().and().csrf().disable().exceptionHandling()
+	    	
+	    	http.cors().and().csrf().disable().exceptionHandling()
 	           .authenticationEntryPoint(unauthorizedHandler).and()
 	                .sessionManagement().sessionCreationPolicy
 	                    (SessionCreationPolicy.STATELESS).and()
@@ -62,7 +93,8 @@ public class WebSecurityConfig{
 	                              .antMatchers("/api/auth/**")
 	                                 .permitAll()
 	                                      .antMatchers("/api/test/**", "/api/**", "/api/addtocart/**", "api/checkoutControl/**")
-	                        .permitAll().anyRequest().authenticated();
+	                        .permitAll().antMatchers(AUTH_WHITELIST).permitAll().
+	                        antMatchers("/").authenticated();
 
 	        http.addFilterBefore(authenticationJwtTokenFilter(), 
 	                   UsernamePasswordAuthenticationFilter.class);
