@@ -19,4 +19,4 @@ public class WarehouseApplication {
 //http://localhost:8080/v3/api-docs
 //http://localhost:8080/v3/api-docs.yaml
 //http://localhost:8080/swagger-ui.html
-//cos mi tu nie gra z dokumentacja. jak to zrobilem? pobrlaem yaml, na stronie editor swagger uplad pliku, generate client jako html, lub html 2
+
